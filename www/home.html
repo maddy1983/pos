@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!-- <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+        <!-- <link rel="stylesheet" type="text/css" href="css/index1.css" /> -->
+        <link rel="stylesheet" href="css/ratchet.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/ratchet-theme-ios.css">
+     
+<!--     <link rel="stylesheet" href="dist/css/ratchet-theme-android.min.css"> -->
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/custom.css">
+        <title>POS</title>
+
+    </head>
+    <body onload="">
+      <div class="loader_sec">
+      <img src="images/ajax-loader.gif" />
+    </div>
+
+
+
+<div id="MyImg" style="width:350px"> </div>
+
+         <header class="bar bar-nav text-c head-space">
+    <div class="header-top">
+    
+      <!-- <a class="icon icon-refresh pull-right"></a> -->
+      <span class="box-shadow-icon pull-left mar-t5"> <a href="javascript:" class="home-icon-top pad3" id="home"></a></span>
+       <span class="box-shadow-icon pull-left mar-t5 mar-l2p" onclick="javascript:print_me();"> <a href="javascript:" class="print-icon pad3"></a></span>
+        <span class="box-shadow-icon pull-left mar-t5 mar-l2p"> <a href="javascript:" class="cash-drawer-icon pad3"></a></span>
+       
+      <span class="pull-left text-c width55p mar-l10 mar-l2p" >
+      
+        <input type="text" class="box-shadow home-product font11" placeholder="Enter product name" id="searchTerm" >
+       
+    </span>
+
+     <!-- <a class="icon icon-refresh pull-right"></a> -->
+      <span class="box-shadow-icon pull-left mar-t5 mar-l2p refresh_btn"> <a href="javascript:" class="refresh-icon pad3"></a></span>
+       <span class="box-shadow-icon pull-left mar-t5 mar-l2p"> <a href="javascript:" class="settings-icon pad3"></a></span>
+       <span class="box-shadow-icon pull-left mar-t5 mar-l2p ptn_rel" id="offline_cloud-icon"> 
+        <a href="javascript:" class="cloud-icon pad3 getOrders" ></a>
+        <b class="webOrderscount" style="display:none"></b>
+       </span>
+        <span class="box-shadow-icon pull-left mar-t5 mar-l2p"> <a href="index.html" class="logout-icon pad3"></a></span>
+     <!-- <span class="box-shadow-icon pull-left mar-t5 mar-l10"> <a href="javascript:"class="setting-icon-top pad3"></a></span>
+      <span class="box-shadow-icon pull-left mar-t5 mar-l10"> <a href="javascript:"class="printer-icon-top pull-left pad3" onclick="javascript:print_me();"></a></span>
+      <span class="box-shadow-icon btn btn-primary ptn refresh_btn"> 
+        <a href="javascript:"class="pull-left pad3 white-color">Refresh</a>
+      </span> -->
+    </div>
+    
+    </header>
+
+
+
+    <div class="bar bar-footer theme-color-new white-color">
+     <div class="empty_cart mar-t15 font16 pull-left">
+       You have no items in the cart.
+     </div>
+     <div class="pull-left font16 productsTotal mar-t15" style="display:none">
+      <span>There are</span>
+      <span><strong class="cart_units_count">0</strong></span> 
+      <span>item(s) in the Cart.</span>
+      <strong>Sub Total: $</strong>
+      <span class="cart_Price"></span>
+      <span>Incl tax</span>
+      </div>
+    <div class="pull-right">
+       <input type="number" id="tableName" class="table-number-box font11 numeric" placeholder="ID#" maxlength="3"> 
+       <a href="javascript:"><strong class="cartsummary_btn pull-right btn btn-primary "> CART SUMMARY</strong></a>
+      <a href="javascript:"><strong class="saveorder_btn pull-right mar-t14 btn btn-primary ">SAVE </strong></a>
+     
+       
+    </div>
+       
+       
+    </div>
+
+   
+
+
+<div class="mar-t65 home-page-bg btm">
+   <div class="slider theme-color-new height148">
+
+    <div class="slide-group top-cat" id="mySliderContent">
+      
+
+     
+    </div>
+    </div>
+ 
+      <div class="breadcrumb box-shadow prodcut-breadcrub" >    
+       
+  <!-- <div class="pull-right holder"> 
+  </div> -->
+   
+
+  
+  
+  <div id="linkNavigation"> Home</div>
+
+</div>
+
+<!-- Web orders -->
+<div class="box-shadow get-web-orders mar-t10">
+  <span class="pull-left width17p border-r pad20 text-c min-h344">
+    <input type="number" class="width60p pad-r0 pad-l6 font11" placeholder="Order No." id="webOrder_number" >
+    <button class="btn  btn-primary pad10 mar-t3 get_WebOrder">Go</button>
+    <ul class="orders-list">
+    </ul>
+  </span> 
+
+<span class="pull-left pad20 width83p min-h344 weborders_Details_sec">
+<table class="order-details">
+  <thead>
+  <tr>
+    <th>Order Id</th>
+    <th>Order Status</th>
+    <th>Customer Name</th>
+    <th>Mobile No.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="webOrder_id"></td>
+      <td class="webOrder_status"></td>
+      <td class="webOrder_Cinfo"></td>
+      <td class="webOrder_Cmob"></td>
+    </tr>
+  </tbody>
+
+</table>
+  <div class="pull-left width100p pad10 mar-t10">
+    <table class="width100p order-details order_details_sec">
+    <thead>
+      <tr>
+        <th>
+          Product Name
+        </th>
+        <th>
+          QTY
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+
+       
+    </table>
+
+ <div class="width60p pull-left pad10 pull-right">
+
+
+        <div class="sub-total mar-r0">
+                <span>
+                <strong> &nbsp;</strong>
+                          
+                <span class="pull-left width80p text-r">Order Total : <strong>$<b class="webOrder_Total"> </b> </strong></span>            
+                </span>
+              
+
+                <div> 
+                  <span class="mar-t10 line_itm pull-right width100p"> 
+                  <strong> &nbsp;</strong>
+                  <span class="pull-left width80p text-r">Amount Refunded : <strong>$<b class="amount_refunded"> </b> </strong></span> 
+                   
+                </div>
+                 
+             
+              
+
+            </div>
+
+
+<!-- 
+            <div class="sub-total mar-l0 ">
+                <span class="mar-t10  width30p mar-l100">Order Total: <strong>$<b class="webOrder_Total"> </b> </strong></span>
+            </div>
+            <div class="sub-total mar-l0 ">
+                <span class="mar-t10  width30p mar-l100">Amount Refunded: <strong>$<b class="amount_refunded"> </b> </strong></span>
+            </div> -->
+        </div>
+ <button class="btn  btn-primary pad12 mar-t10 mark_Completed" style="display:none">Mark Completed</button>
+
+  </div>
+
+</span>
+
+</div>
+
+<!-- Passcode -->
+<div class="box-shadow get-passcode mar-t10">
+  <span class="pull-left width17p border-r  text-c min-h200">
+     <ul class="pad0 app-settings">
+       <li><span class="passcode-icon"></span>Passcode</li>
+     </ul>
+  </span> 
+
+<span class="pull-left pad10 width83p min-h200">
+    <span class="pull-left pad10 pad-l0 passcode_chk oldPasscode_chk">
+      <label class="font13">Current Password</label>
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric" maxlength="1">
+      <input type="number" class="pad-r0 width11p currPasscode numeric"  maxlength="1">
+    </span>
+    <span class="pull-left pad10 pad-l0 passcode_chk newpasscode_chk">
+      <label class="font13">New Password</label>
+      <input type="number" class="pad-r0 width11p newpasscode_first numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p newPassCode numeric" maxlength="1">
+      
+    </span>
+    <span class="pull-left pad10 pad-l0 passcode_chk confrimpasscode_chk">
+      <label class="font13 confirm-ps">Confirm Password</label>
+      <input type="number" class="pad-r0 width11p confirmPasscode_first numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p numeric"  maxlength="1">
+      <input type="number" class="pad-r0 width11p confirmPassCode numeric" maxlength="1">
+     
+    </span> 
+    <span class="update-btn-setting"><button class="btn  btn-primary pad10 mar-t3 pull-right mar-r46 updatePasscode">Update</button></span>
+</span>
+
+</div>
+
+    <div class="slider sub-cat-slide" >
+  <div class="slide-group top-cat height-subcat" id="SubSlider">
+    
+    
+
+     
+  </div>
+
+
+
+   <!-- Begin checkout form -->
+    <div class="checkout-wrapper">
+        <h3 class="mar-t20 pull-left mar-l25">Cart Summary</h3>
+       <!--  <a href="#" class="popup-minus-icon" id="icons"></a> -->
+
+       <!--  <button class="btn delete-btn pull-right product_Delete hide btn-primary" >Delete</button> -->
+        
+        <table class="checkOut_Table">
+            <thead>
+            <tr>
+                <th> <button class="btn delete-btn pull-right product_Delete btn-primary">Delete</button></th>
+                <th>Product(s)</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Total</th>
+
+            </tr>
+            </thead>
+            <tbody class="checkOut_Details_Sec"><div>
+            </div>
+            </tbody>
+        </table>
+
+        <div class="mar-t20 clear">
+        <div class="width65p pull-left pad10 pull-right">
+
+        <div class="sub-total">
+                <span>
+                <strong> &nbsp;</strong>
+                <span>$<strong class="sub_total">10</strong></span>               
+                <span class="pull-left width80p text-r">Sub-Total (Incl tax) :</span>            
+                </span>
+                <span class="discount_Amt_Sec hide">
+                  <span> $<strong class="discount_amt"></strong></span>
+                  <span class=" pull-left width80p text-r mgn-2r">Discount : </span> 
+                </span>
+                <span class="gift_bal" style="display:none">Gift Card :(<small class="giftAmntBalance"></small>) 
+                  <strong>$<b class="giftcards_amt"></b></strong>
+                  <span class="line-h8"></span>
+                </span>
+
+                <div> 
+                  <span class="mar-t10 line_itm pull-right width100p"> 
+                  <strong> &nbsp;</strong>
+                  <span class="pull-left width80p text-r"> Total : </span> 
+                  <strong>$<b class="grandTotal">100 </b> </strong></span>
+                </div>
+                 
+                
+              
+
+            </div>
+<!-- 
+
+
+            <div class="sub-total">
+                <span>Sub-Total(Incl tax): 
+                  <strong> &nbsp;</strong>
+                  <strong class="sub_total"> 10</strong>
+                  <strong>$</strong>
+                </span>
+                <span class="discount_Amt_Sec hide">Discount: <strong class="discount_amt"></strong><strong>$ </strong></span>
+                <span class="gift_bal" style="display:none">Gift Card:(<small class="giftAmntBalance"></small>) 
+                  <strong>$<b class="giftcards_amt"></b></strong>
+                  <span class="line-h8"></span>
+                </span>
+                <span class="mar-t10 line_itm">Total: <strong>$<b class="grandTotal">100 </b> </strong></span>
+
+            </div> -->
+        </div>
+
+        <div class="clear_r coupon-code-wrapper mar-t10">
+            <input type="number" class="mar-l10 font11 pull-left width40p coupon_code input_null width25p">
+            <button class="btn apply-btn apply_coupon btn btn-primary pad12">Discount Coupon</button>
+            <button class="btn apply-btn apply_gift_card btn btn-primary pad12">Gift Card</button>
+            <!-- <button class="btn apply-btn btn-primary place_Order">CheckOut</button> -->
+        <input type="hidden" id="cashValue">
+         <div class="pull-left">
+                <!-- <label class=" pull-left font11 mar-l10 mar-b5">Cash In</label> -->
+                <input type="number" placeholder="cash" id="cashIn" class="mar-l10 font11 CardExpYear pull-left wid35px input_null clear_l">
+              </div>
+           <!--  <input type="text" placeholder="Customer Name" class="mar-l10 font11 pull-left width40p CustomerName coupon_code input_null">
+            <button class="btn apply-btn btn btn-primary closeOrder payment_methods" id="credit_checkout">Credit Card</button> -->
+            <button class="btn apply-btn place_Order btn-primary closeOrder payment_methods pad12" id="Cash_checkout">Cash</button>
+            <button class="btn apply-btn btn btn-primary place_Order closeOrder payment_methods pad12" id="Card_checkout">Card</button>
+        </div>
+            
+            <!-- <label class="pull-left font11 mar-l10 mar-b5">Credit Card No.</label>
+            <input type="number" maxlength="16" class="mar-l10 font11 pull-left CreditCardNo width40p input_null clear_l">
+            
+            <div class="creditMethod">
+              <div class="pull-left mgn-t13px mar-l10">
+              <label class=" pull-left font11 mar-l10 mar-b5">Exp MM</label>
+              <input type="number" class="mar-l10 font11 CardExpMonth pull-left wid35px input_null clear_l">
+              </div>
+
+              <div class="pull-left mgn-t13px">
+              <label class=" pull-left font11 mar-l15 mar-b5">Exp YY</label>
+              <input type="number" class="mar-l10 font11 CardExpYear pull-left wid35px input_null clear_l">
+              </div>
+
+               <div class="pull-left mgn-t13px">
+              <label class=" pull-left font11 mar-l20 mar-b5">CVV</label>
+              <input type="number" class="mar-l10 font11 CardCVV pull-left wid35px input_null clear_l">
+              </div>
+            </div>
+ -->
+            <div class="">
+
+             <!--  <div class="pull-left mgn-t13px">
+                <label class=" pull-left font11 mar-l10 mar-b5">Cash In</label>
+                <input type="number" id="cashIn" class="mar-l10 font11 CardExpYear pull-left wid35px input_null clear_l">
+              </div> -->
+
+              <!--  <div class="pull-left mgn-t13px">
+                <label class=" pull-left font11 mar-l10 mar-b5">Cash Out</label>
+                <input type="number" id="cashOut" class="mar-l10 font11 CardCVV pull-left wid35px input_null clear_l">
+              </div>
+               -->
+            </div>
+
+
+
+
+        
+
+
+        </div>
+
+        
+        <!-- <div class="place-order-btn">
+          <button class="btn btn-primary pull-right place_Order">CheckOut</button>
+        </div> -->
+   
+</div>
+
+<div class="text-c mar-t20 home-content height475">
+
+
+
+
+<!-- Amount for refund -->
+<div class="box-shadow refund_sec" id="ProcessRefund">
+  <h4 class="mar-t10 mar-b10 pull-left mar-r20 font14">Process Refund </h4>  
+    <input type="text" class="refund_OrderID width11p pull-left mar-b0" placeholder="Order Id" />
+    <input type="number" class="refund_OrderCash width11p pull-left mar-l1p mar-b0 numeric" placeholder="Amount" />
+    <input type="text" class="refund_Reason pull-left mar-l1p width51p mar-b0" placeholder="Reason for Refund" />
+    <span class="btn btn-primary pull-left refund_btn mar-l1p refund-btn-home">Refund</span>
+  </div>  
+
+<!-- Amount for refund -->
+  <!-- 
+    <h4 class="mar-t10">Refund: </h4>
+    <input type="text" class="refund_OrderID width50p pull-left" placeholder="Order Id" />
+    <input type="text" class="refund_OrderCash width50p pull-right" placeholder="Cash" />
+    <input type="text" class="refund_Reason pull-left" placeholder="Reason for Refund" />
+    <span class="btn btn-primary pull-left refund_btn">Refund</span>
+  </div>    -->
+ 
+  
+
+  <div class="refund_sec"> 
+  <button class="btn no-radius height156 newOrder pull-left" style="display:none">
+    <img src="images/emptycart-icon.png">
+    <h4 class="mar-t12">Start New <br>Order</h4>
+  </button>
+   <span class="savedOrders_sec pull-left mar-l1p">
+  </span>
+  
+<span class="offlineOrders_sec pull-left mar-l1p">
+  <button class="btn no-radius height156">
+    <img src="images/offline-icon.png">
+    <h4 class="mar-t10">Offline Order(s): <strong class='offlineOrderCount'></strong></h4>
+    <!-- <h4>Amount: <span>2523</span></h4> -->
+  </button>
+</span>
+</div>
+
+
+
+<!-- Begin show order list -->
+<div class="showOrderList" style="display:none">
+  <div class="pull-left order_list">
+    
+  </div>
+  <div class="pull-right order_details">
+    
+  </div>
+</div>
+<!-- End show order list -->
+
+
+<!-- Amount for refund -->
+  <!-- <div class="btn no-radius refund_sec">
+    <h4 class="mar-t10">Refund: </h4>
+    <input type="text" class="refund_OrderID width50p pull-left" placeholder="Order Id" />
+    <input type="text" class="refund_OrderCash width50p pull-right" placeholder="Cash" />
+    <input type="text" class="refund_Reason pull-left" placeholder="Reason for Refund" />
+    <span class="btn btn-primary pull-left refund_btn">Refund</span>
+  </div>    -->
+
+  <!-- <button class="btn no-radius height156 newOrder" style="display:none">
+    <img src="images/emptycart-icon.png">
+    <h4 class="mar-t12">Start New <br>Order</h4>
+  </button>
+ 
+   <span class="savedOrders_sec">
+</span>
+<span class="offlineOrders_sec"> -->
+  <!-- <button class="btn no-radius height156">
+    <img src="images/offline-icon.png">
+    <h4 class="mar-t10">Cart ID: <span>2523</span></h4>
+    <h4>Amount: <span>2523</span></h4>
+  </button> -->
+<!-- </span>
+  </div> -->
+<!-- 
+<div class="text-c mar-t20 home-content">
+  <button class="btn no-radius newOrder_btn">
+    <img src="images/emptycart-icon.png">
+    <h4 class="mar-t12">Start New <br>Order</h4>
+  </button>
+ <div class="savedOrders_sec pull-left">
+    </div>
+  <button class="btn no-radius">
+    <img src="images/offline-icon.png">
+    <h4 class="mar-t10">Cart ID: <span>2523</span></h4>
+    <h4>Amount: <span>2523</span></h4>
+  </button>
+  </div>
+ -->
+ 
+ 
+   
+ 
+    </div>
+
+
+
+
+        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+         <script type="text/javascript" src="cordova.js"></script>
+      <!--<script type="text/javascript" src="js/OfflineHandler.js"></script>-->
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+  <script type="text/javascript" src="bixolonprint.js"></script>
+        <!-- // <script type="text/javascript" src="js/ratchet.js"></script>
+        // <script type="text/javascript" src="js/sliders.js"></script> -->
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="js/cart.js"></script>
+    
+    
+    <script type="text/javascript">
+
+
+    $(function(){
+   
+      homeOnload();
+      SyncOrders();
+
+    });
+    var offlineHandlerObj=[
+              {
+               'element':'#offline_cloud-icon',
+               'elementHandler':function(elem,inp)
+               {
+                $(elem).css('display',inp);
+                //surya();
+                /*var interval = null;
+                  jQuery(function(){
+                    interval = setInterval(getOrdersCount, 600000);
+                  });
+*/
+               }
+              },
+              {
+               'element':'.refresh_btn',
+               'elementHandler':function(elem,inp)
+               {
+                $(elem).css('display',inp);
+               }
+              },
+              {
+                'element':'#ProcessRefund',
+                'elementHandler':function(elem,inp){
+                  $(elem).css('display',inp);
+                }
+              },
+              {
+                'element':'.apply_gift_card',
+                'elementHandler':function(elem,inp){
+                  $(elem).css('display',inp);
+                }
+              }
+          ];
+
+          var homeOnload=function(){
+
+          document.addEventListener('deviceready', onDeviceready, false);
+
+          };
+
+          var db;
+          var onDeviceready=function(){
+
+            
+          document.addEventListener('online', onDeviceOnline, false);
+          document.addEventListener('offline', onDeviceOffline, false);
+          createTable();
+         
+          };
+          var createTable=function(){
+             var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+             db.transaction(function(tx) {
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS Categories (cID integer primary key,CategoryID integer, CategoryName text, CategoryDescription text,DisplayOrder integer,ImagePath text,Base64Img text,ParentCategoryID integer,IsActive integer,DateAdded text)');
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS Products (pID integer primary key,ProductID integer,ProductName text,CategoryID integer, DiscountPrice integer, DisplayOrder integer,ImagePath text,Base64Img text,IsActive integer,Price integer,ProductDescription text,DateAdded text)');
+                 
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS Discounts (DiscountID integer,DiscountAmount integer,DiscountName text,DiscountType integer,CouponCode text, StartDate text, EndDate text,UsageType integer)');
+                 // offline orders table
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS OfflineOrders (OfflineOrderId integer,OfflineJson text)');
+
+                 /*tx.executeSql('CREATE TABLE IF NOT EXISTS OfflineOrders (OfflineOrderId integer,DiscountAmount integer,DiscountId text,DiscountType integer,CodeType integer,CouponCode text,OrderSubtotal integer,Amount text,CashIn integer,CashOut integer,PaymentMethod integer,OfflineDateTime text)');
+
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS OfflineOrderProduct(OfflineOrderID integer,ProductID integer,Quantity integer,Price integer,Total integer)');*/
+
+                 });    
+                };
+
+                   
+          var onDeviceOnline=function(){
+            localStorage.setItem("isDeviceOnline",true);
+           // alert(localStorage.getItem('isOffline'));
+           if(localStorage.getItem('isOffline')=='false')
+           {
+           onLineActivities();
+            }
+            //SyncOrders();
+
+          };
+          var onDeviceOffline=function(){
+            // alert("offline");
+            localStorage.setItem("isDeviceOnline",false);
+              offlineActivities();
+
+          };
+          var offlineActivities=function(){
+          $.each(offlineHandlerObj,function(key,val){
+                            val.elementHandler(val.element,'none');
+                 });
+          };
+          var onLineActivities=function(){
+
+              $.each(offlineHandlerObj,function(key,val){
+                  val.elementHandler(val.element,'block');
+                });
+              SyncOrders();
+          };
+          function SyncOrders(){
+            //alert('inside SyncOrders');
+            var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+            db.transaction(function(tx) {
+                  tx.executeSql('SELECT * from OfflineOrders',[],
+                  OfflineOrdersCallback, 
+                errorCB1//error callback               
+                  );
+          });
+          };
+          $('.offlineOrders_sec').click(function(){
+            //alert(localStorage.getItem("isDeviceOnline"))
+            if(localStorage.getItem("isDeviceOnline")=="true"){
+                // SyncOrders();
+            }
+            });
+          function OfflineOrdersCallback(tx,results){
+            
+            var data=results.rows;
+           // alert('inside OfflineOrdersCallback'+data.length);
+           //$(".loader_sec").show();
+            for(var i=0;i<data.length;i++){
+              var offlineCount=data.length;
+              var OfflineOrderId=data.item(i).OfflineOrderId;
+               var OfflineJson=JSON.parse(data.item(i).OfflineJson);
+                SyncAjax(OfflineJson,OfflineOrderId,offlineCount);
+               /*_rootCategories.push({
+                  'CategoryDescription':data.item(i).CategoryDescription,
+                  'CategoryID':data.item(i).CategoryID,
+                  'CategoryName':data.item(i).CategoryName,
+                  'DisplayOrder':data.item(i).DisplayOrder,
+                  'ImagePath':data.item(i).ImagePath,
+                  'IsActive':data.item(i).IsActive,
+                  'ParentCategoryID':data.item(i).ParentCategoryID
+                });  */
+                  }
+               // $(".loader_sec").hide();
+
+          };
+          function SyncAjax(json,OfflineOrderId,updateOfflineOrderCount){
+            $.ajax({
+              url:'http://point-of-sale.gtsinteractive.com/gtsiposws/SyncOrder',
+              type:'POST',
+              headers: 
+              {
+               'DID':localStorage.getItem("uuid"),//'14e5fabb-33a0-4812-a54d-1d0fe672fc41',
+               'TokenID': token
+              },
+              data:json,
+              async:false,
+              success:function(data){
+                //alert('inside sync service success');
+                if(data.ResultCode==0){
+                  DeleteOfflineOrder(OfflineOrderId);
+                }
+              },
+              error:function(data){
+                //alert('inside sync service error');
+                 $(".loader_sec").hide();
+              }
+            });
+          }
+          function DeleteOfflineOrder(OfflineOrderId){
+            var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+            db.transaction(function(tx) {
+                  tx.executeSql('DELETE  from OfflineOrders Where OfflineOrderId = ? ',[OfflineOrderId],
+                  DeleteOfflineOrderCallback
+                  , 
+                errorCB1//error callback               
+                  );
+                  tx.executeSql('SELECT * from OfflineOrders',[],
+                  OfflineOrdersSuccessCount, 
+                errorCB1//error callback               
+                  );
+          });
+          }
+          function DeleteOfflineOrderCallback(tx,results){
+
+          }
+          function OfflineOrdersSuccessCount(tx,results){
+             var data=results.rows;
+             if(data.length>=1){
+              $('.offlineOrders_sec').show();
+              localStorage.setItem("offlineOrderCount",data.length);
+              $('.offlineOrderCount').html(data.length);
+             }else{
+              localStorage.setItem("offlineOrderCount",0);
+              $('.offlineOrders_sec').hide();
+              navigator.notification.alert("Offline order(s) synced sucessfully.");
+              //navigator.notification.alert("Offline order(s) synced sucessfully.");
+
+             }
+              
+
+          }
+        </script>
+             <script type="text/javascript">
+      
+var response = {};
+var utils = {
+  data:null,
+  readFromStorage: function(){
+    if(this.data == null){
+      this.data = JSON.parse(localStorage.getItem('data'));
+    }
+    return this.data;
+  },
+  loadCategories: function(categoryId){
+    var data = this.readFromStorage();
+    var categories = _.where(data.Categories, {
+      ParentCategoryID: categoryId,
+      IsActive: 1
+    });
+    categories = _.sortBy(categories, function(category){
+      return category.DisplayOrder;
+    });
+    return categories;
+  },
+  loadProducts: function(categoryId){
+    var data = this.readFromStorage();
+    var products = _.where(data.Products, {
+      CategoryID: categoryId,
+      IsActive: 1
+    });
+    products = _.sortBy(products, function(product){
+      return product.DisplayOrder;
+    });
+    return products;
+  },
+  searchProducts: function(productName){
+    var data = this.readFromStorage();
+    var products = _.filter(data.Products, function(product){
+      return product.ProductName.search(new RegExp(productName, 'gi')) != -1;
+    });
+    return products;
+  }
+};
+function renderItems(items, id, sliderItemCount, clickHandler, width, height) {
+  var outerHtml='';
+  var innerHtml='';
+    $('#'+id).html('');
+      for(var i=1; i<=items.length;i++) {
+                                       
+         //if((i % sliderItemCount==0) || (items.length < sliderItemCount && i == items.length)){
+            innerHtml += '<li>';                              
+            innerHtml += '<a href="javascript:" onclick="'+clickHandler+'('+items[i-1].CategoryID+',\''+items[i-1].CategoryName+'\');"><img id="Categories_'+items[i-1].CategoryID+'" src="'+ validateBase64(items[i-1].ImagePath,"Categories_"+items[i-1].CategoryID) +'" width="'+ width +'" height="'+ height +'"/></a>';
+            innerHtml += '<p>'+ items[i-1].CategoryName +'</p>';
+            innerHtml += '</li>';
+
+            outerHtml = '<div class="slide text-c" id="sub-slider"><ul class="main_category">';
+            outerHtml += innerHtml;
+            outerHtml += '</ul></div>';
+
+
+      //  outerHtml = '';
+      //  innerHtml = '';
+
+      //   } else{
+
+      //   innerHtml += '<li>';                              
+      //   innerHtml += '<a href="javascript:" onclick="'+clickHandler+'('+items[i-1].CategoryID+',\''+items[i-1].CategoryName+'\');"><img src="'+ items[i-1].ImagePath +'" width="'+ width +'" height="'+ height +'"/></a>';
+      //   innerHtml += '<p>'+ items[i-1].CategoryName +'</p>';
+      //   innerHtml += '</li>';                              
+      // }                   
+  
+  }   
+
+          $('#'+id).append(outerHtml);
+          //$("#SubSlider").eq(2).find("ul").attr('id','itemContainer1')
+
+}
+
+function renderProductItems(items, id, sliderItemCount, clickHandler, width, height) {  
+
+
+  var outerHtml='';
+                        var innerHtml='';
+                          $('#'+id).html('');
+                            for(var i=1; i<=items.length;i++) {
+                                  //alert(items[i-1].ImagePath); 
+                               //if((i % sliderItemCount==0) || (items.length < sliderItemCount && i == items.length)){
+                                  innerHtml += '<li class="product_itm" id="'+items[i-1].ProductID+'"><span><strong class="product_Name product-names">'+items[i-1].ProductName+'</strong>';                              
+                                  innerHtml += '<a href="javascript:" class="addUnits"><img src="images/plus-icon.png" class="pull-left plus-icon"></a>';
+                                  innerHtml += '<input type="text" placeholder="0" readonly value="0" class="qty unitsQty" id="'+items[i-1].Price.toFixed(2)+'" />';
+                                  innerHtml += '<a href="javascript:" class="removeUnits"><img src="images/minus-icon.png" class="pull-left minus-icon" ></a>';
+                                  innerHtml += '</span><div class="badge price-tag">Price: $<strong class="product_price">'+items[i-1].Price.toFixed(2)+'</strong> </div>';
+                                  innerHtml += '<img class="offlineImgs" id="Products_'+items[i-1].ProductID+'"  src="'+ validateBase64(items[i-1].ImagePath,'Products_'+items[i-1].ProductID) +'" width="'+ width +'" height="'+ height +'"/>';
+                                  innerHtml += '</li>';
+
+                                  outerHtml = '<div class="slide text-c height-subcat" id="product"><ul>';
+                                  outerHtml += innerHtml;
+                                  outerHtml += '</ul></div>';
+
+
+                               
+
+                            //  outerHtml = '';
+                            //  innerHtml = '';
+
+                            //   } else{
+
+                            //   innerHtml += '<li class="product_itm" id="'+items[i-1].ProductID+'"><span><strong class="product_Name product-names">'+items[i-1].ProductName+'</strong>';                              
+                            //   innerHtml += '<a href="javascript:" class="addUnits"><img src="images/plus-icon.png" class="pull-left plus-icon"></a>';
+                            //   innerHtml += '<input type="text"  value="0"  id="'+items[i-1].Price.toFixed(2)+'" readonly placeholder="0" class="qty unitsQty" />';
+                            //   innerHtml += '<a href="javascript:" class="removeUnits"><img src="images/minus-icon.png" class="pull-left minus-icon"></a>';
+                            //   innerHtml += '</span><div class="badge price-tag">Price: $<strong class="product_price">'+items[i-1].Price.toFixed(2)+'</strong> </div>';
+                            //   innerHtml += '<img class="offlineImgs" src="'+ items[i-1].ImagePath +'" width="'+ width +'" height="'+ height +'"/>';
+                            //   innerHtml += '</li>';                           
+                            // }                   
+                        
+                        }
+                         $('#'+id).append(outerHtml);
+                        //  $('#'+id).pagination({
+                        //     items: items.length,
+                        //     itemsOnPage: 10,
+                        // });
+                        /*$.each($('.offlineImgs'),function(key,val){
+                          alert($(val).complete);
+                        }); */
+
+
+}
+$(document).ready(function() {
+    for (var i = 0; i < document.images.length; i++) {
+      //alert("inside images");
+        if (!isImageOk(document.images[i])) {
+            //document.images[i].style.visibility = "hidden";
+           //alert("not loaded");
+        }
+    }
+    // $(document).on('click','.main_category li',function(){
+    //   $('.holder').hide();
+    // });
+});
+function isImageOk(img) {
+    // During the onload event, IE correctly identifies any images that
+    // weren't downloaded as not complete. Others should too. Gecko-based
+    // browsers act like NS4 in that they report this incorrectly.
+    if (!img.complete) {
+        return false;
+    }
+
+    // However, they do have two very useful properties: naturalWidth and
+    // naturalHeight. These give the true size of the image. If it failed
+    // to load, either of these should be zero.
+    if (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0) {
+        return false;
+    }
+
+    // No other way of checking: assume it's ok.
+    return true;
+}
+function renderRootCategories(){
+  // alert("inside renderRootCategories");
+  GetRootCategories(0)
+};
+
+function GetRootCategories(categoryID){
+ 
+var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+ db.transaction(function(tx) {
+                tx.executeSql('SELECT * from Categories Where ParentCategoryId = ? AND IsActive=? ORDER BY DisplayOrder ASC',[categoryID,1],
+                  MatchPass, 
+                errorCB1//error callback               
+                  );
+              });
+          $('.holder').hide();
+}
+
+function MatchPass(tx, results)
+{
+  var _rootCategories=[];
+      var data=results.rows;
+      // alert(data.length);
+      for(var i=0;i<data.length;i++){
+       _rootCategories.push({
+          'CategoryDescription':data.item(i).CategoryDescription,
+          'CategoryID':data.item(i).CategoryID,
+          'CategoryName':data.item(i).CategoryName,
+          'DisplayOrder':data.item(i).DisplayOrder,
+          'ImagePath':data.item(i).ImagePath,
+          'IsActive':data.item(i).IsActive,
+          'ParentCategoryID':data.item(i).ParentCategoryID
+        });  
+     }
+     // alert("root categories count"+_rootCategories.length);
+     
+                    $(".loader_sec").hide();
+    renderItems(_rootCategories, 'mySliderContent', 7, 'renderSubCategories', 81, 81 );
+    //alert("render complete");
+    if(_rootCategories && _rootCategories.length > 0){      
+      renderSubCategories(_rootCategories[0].CategoryID, _rootCategories[0].CategoryName);
+    }
+    //loadDiscountList();
+       
+
+    
+    
+}
+function errorCB1(data)
+{
+    // alert(data);
+}
+function renderSubCategories(categoryId,categoryName){
+   //$('#SubSlider1 ul').attr('id', 'itemContainer1'); 
+  $("#searchTerm").val('');
+  $(".home-content,.get-web-orders,.get-passcode").hide(); 
+  $(".sub-cat-slide").addClass('height502');   
+  $('#linkNavigation').html('<a onclick="$(\'#home\').click();" id="home_sec"> Home </a> / <a onclick="renderSubCategories('+categoryId+',\''+categoryName+'\');">'+categoryName+'</a>');
+  localStorage.setItem("categoryID",categoryId);
+  localStorage.setItem("categoryName",categoryName);
+    getSubCategories(categoryId);
+    pagination();
+  /*var subCategories = utils.loadCategories(categoryId);  
+  // renderItems(subCategories, 'SubSlider', 10, 'renderProducts', 140, 145 );
+  
+  if(subCategories.length > 0){ 
+    renderItems(subCategories, 'SubSlider', 10, 'renderProducts', 140, 145 );
+  } else {
+    renderProducts(categoryId, categoryName);
+  } 
+  $('.get-web-orders').hide();
+  $('#SubSlider').show();
+  */
+  ///$('#myModalexample').addClass('active');
+};
+//renderSubCategories(1,'Take Home Meals');
+function getSubCategories(categoryId){
+
+  //alert("inside getSubcategories");
+var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+ db.transaction(function(tx) {
+                tx.executeSql('SELECT * from Categories Where ParentCategoryId = ? AND IsActive=? ORDER BY DisplayOrder ASC',[categoryId,1],
+                  subCategoriesCallBack, 
+                errorCB1//error callback               
+                  );
+              });
+};
+function subCategoriesCallBack(tx,results){
+  //alert("inside Subcategories call back");
+var _subCategories=[];
+      var data=results.rows;
+      for(var i=0;i<data.length;i++){
+       _subCategories.push({
+          'CategoryDescription':data.item(i).CategoryDescription,
+          'CategoryID':data.item(i).CategoryID,
+          'CategoryName':data.item(i).CategoryName,
+          'DisplayOrder':data.item(i).DisplayOrder,
+          'ImagePath':data.item(i).ImagePath,
+          'IsActive':data.item(i).IsActive,
+          'ParentCategoryID':data.item(i).ParentCategoryID
+        });  
+     }
+  if(_subCategories.length > 0){ 
+    renderItems(_subCategories, 'SubSlider', 10, 'renderProducts', 140, 145 );
+  } else {
+    var _categoryId=localStorage.getItem("categoryID");
+    var _categoryName=localStorage.getItem("categoryName");
+    renderProducts(_categoryId, _categoryName);
+  } 
+ $('.get-web-orders').hide();
+  $('#SubSlider').show();
+
+}
+
+// function searchProducts(categoryName){
+//   // var searchStr = 'select * from Products where productName like '% +categoryName+ %' AND IsActive=? ORDER BY DisplayOrder ASC';
+//   // alert("select * from Products where productName like '% "+categoryName+" %' AND IsActive=? ORDER BY DisplayOrder ASC");
+//   // alert(categoryName);
+//   getSearchProducts(categoryName);
+// }
+
+function getSearchProducts(categoryName){
+  var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+   db.transaction(function(tx) {
+                  tx.executeSql('Select * from Products where productName like ? AND IsActive=? ORDER BY DisplayOrder ASC',['%' + categoryName +'%',1],
+                  searchProductsCallBack, 
+                  errorCB1//error callback               
+                    );
+  });
+}
+function searchProductsCallBack(tx,results){
+  var _searchProducts=[];
+      var data=results.rows;
+      for(var i=0;i<data.length;i++){
+       _searchProducts.push({
+          'DiscountPrice':data.item(i).DiscountPrice,
+          'CategoryID':data.item(i).CategoryID,
+          'DisplayOrder':data.item(i).DisplayOrder,
+          'ImagePath':data.item(i).ImagePath,
+          'Price':data.item(i).Price,
+          'ProductDescription':data.item(i).ProductDescription,
+          'ProductID':data.item(i).ProductID,
+          'ProductName':data.item(i).ProductName
+        });  
+     }
+     renderProductItems(_searchProducts, 'SubSlider', 8, 'productHandler', 250, 226);
+
+}
+
+
+
+
+
+
+
+function renderProducts(categoryId, categoryName){
+  
+  //var products = utils.loadProducts(categoryId);
+
+  getProducts(categoryId);
+  //renderProductItems(products, 'SubSlider', 8, 'productHandler', 250, 226);
+  //$('#myModalexample').addClass('active');
+  localStorage.setItem("nav_productName",categoryName);
+};
+function getProducts(categoryId){
+    //alert("inside render product "+categoryId);
+var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+ db.transaction(function(tx) {
+                tx.executeSql('SELECT * from Products Where CategoryId = ? AND IsActive=? ORDER BY DisplayOrder ASC',[categoryId,1],
+                  productsCallBack, 
+                errorCB1//error callback               
+                  );
+              });
+
+}
+
+
+
+
+
+function productsCallBack(tx,results){
+var _products=[];
+      var data=results.rows;
+      // alert(data.length);
+
+
+// alert("productsCallBack");
+
+
+
+
+
+      for(var i=0;i<data.length;i++){
+      // ProductsBase64();
+      // productsDb(data);
+       _products.push({
+          'DiscountPrice':data.item(i).DiscountPrice,
+          'CategoryID':data.item(i).CategoryID,
+          'DisplayOrder':data.item(i).DisplayOrder,
+          'ImagePath':data.item(i).ImagePath,
+          'Base64Img': data.item(i).Base64Img,
+          'Price':data.item(i).Price,
+          'ProductDescription':data.item(i).ProductDescription,
+          'ProductID':data.item(i).ProductID,
+          'ProductName':data.item(i).ProductName
+        });  
+     }
+     renderProductItems(_products, 'SubSlider', 8, 'productHandler', 250, 222);
+     if(data.length>0){
+      var nav_productName = localStorage.getItem("nav_productName");
+        // $('#linkNavigation').append('<a> / '+categoryName+'</a>');
+        $('#linkNavigation').append('<a> / '+nav_productName+'</a>');
+
+     } else {
+      $('#product').html('There are no products for this category');
+     }
+    //  if(data.length > 10){
+    //   pagination();
+    // } else {
+      // $('.holder').hide();
+    // }
+     
+     
+
+}
+
+
+
+// function pagination(){
+//   $('.holder').show();
+//   $("div.holder").jPages({
+//                 containerID: "itemContainer",
+//                 perPage: 8,
+//                 keyBrowse: true,
+//                 scrollBrowse: true,
+//                 animation: "bounceInUp",
+//                 callback: function (pages,items) {
+//                     $("#legend1").html("Page " + pages.current + " of " + pages.count);
+//                     $("#legend2").html("Elements "+items.range.start + " - " + items.range.end + " of " + items.count);
+//                 }
+//             });
+  
+// }
+
+
+
+
+
+// function pagination1(){
+//   $(".holder2 div.holder").jPages({
+//                 containerID: "SubSlider",
+//                 perPage: 10,
+//                 keyBrowse: true,
+//                 scrollBrowse: true,
+//                 animation: "bounceInUp",
+//                 callback: function (pages,items) {
+//                     $("#legend1").html("Page " + pages.current + " of " + pages.count);
+//                     $("#legend2").html("Elements "+items.range.start + " - " + items.range.end + " of " + items.count);
+//                 }
+//             });
+  
+// }
+
+
+
+function productHandler(categoryId){
+  //navigator.notification.alert(categoryId);
+};
+function loadImageDataURLS(response){
+
+   //console.log('inside load image');
+  var categories = response.Categories;
+  categories = categories?categories:[];  
+  var products = response.Products;
+  products = products?products:[];  
+  var deferCategories = new $.Deferred();
+  var deferProducts = new $.Deferred();
+  function getImageDataURL(items, index, type, deferType){
+    // console.log('inside getImageDataURL');
+    if(index < items.length){
+      var imgSrc = items[index].ImagePath;
+      var imgAsDataURL;
+      var img = new Image();  
+      img.onload = function () {
+       //console.log('local image for '+type+index);
+       //alert(imgSrc);        
+        items[index].ImagePath = 'images' + imgSrc.substring(imgSrc.lastIndexOf('/'));        
+        getImageDataURL(items, index+1, type, deferType);
+      };
+      img.onerror = function () {
+
+        //console.log('server image for '+type+index);
+        getImageDataURL(items, index+1, type, deferType);
+      };
+      
+      if(imgSrc && imgSrc.lastIndexOf('/') != -1){       
+          img.src = 'images' + imgSrc.substring(imgSrc.lastIndexOf('/'));
+      } else {
+        //console.log('default image for '+type+index);
+        //alert('inside image error');
+        items[index].ImagePath = 'images/default-image_333.gif';
+      }
+      //img.src = items[index].ImagePath;
+      
+    } else {
+      deferType.resolve(items);
+    }
+    return imgAsDataURL;
+  };
+  getImageDataURL(categories, 0, 'category', deferCategories);
+  getImageDataURL(products, 0, 'product', deferProducts);
+  $.when(deferCategories, deferProducts).done(function(categories, products){
+    var data = {
+      Categories: categories,
+      Products: products
+    };
+    //localStorage.setItem('data', JSON.stringify(data));
+    //console.log('stored data locally');
+    renderRootCategories();
+    //var rootCategories = utils.loadCategories(0);
+
+  });
+};
+
+
+
+discounts = [];
+var loadDiscountList = function(){
+  var discounts=[{
+    CouponCode: '123456',
+    DiscountAmount: 10,
+    DiscountID: 10,
+    DiscountName: 'test offer',
+    DiscountType: 1,
+    EndDate: null,
+    StartDate: null,
+    UsageType:0 
+
+  }];
+ //SaveDiscountsForOfflineUse(discounts);
+  $.ajax({
+    //cache : false,
+    url : 'http://point-of-sale.gtsinteractive.com/GTSIPOSWS/DiscountList',
+    headers : {
+          'DID':localStorage.getItem("uuid"),//'14e5fabb-33a0-4812-a54d-1d0fe672fc41',
+          'TokenID': token      
+    },
+    dataType: 'json',  
+    success : function(data){
+      var ResultCode = data.ResultCode;
+    
+      if(ResultCode == 0){        
+        discounts = data.Discounts;
+        //alert("inside parent discount");
+        SaveDiscountsForOfflineUse(discounts);
+        localStorage.setItem('discounts',JSON.stringify(discounts));
+      } else{
+          navigator.notification.alert(data.Message);
+      }      
+    },
+    error : function(data){
+      //alert(data.status);
+      navigator.notification.alert('Failed to fetch discount list')
+    }
+  })
+}
+var SaveDiscountsForOfflineUse=function(discounts){
+  //alert("inside sve discounts");
+  var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+   db.transaction(function(tx) {
+   tx.executeSql("DELETE from Discounts");
+  $.each(discounts,function(key,val){
+               
+                tx.executeSql("INSERT INTO Discounts (DiscountID, DiscountAmount,DiscountName,DiscountType,CouponCode,StartDate,EndDate,UsageType) VALUES (?,?,?,?,?,?,?,?)",
+                 [val.DiscountID,val.Discount,val.DiscountName,val.DiscountType,val.CouponCode,val.StartDate,val.EndDate,val.UsageType],
+                  function(tx, res) {
+
+                }, function(e) {
+                  console.log("ERROR: " + e.message);
+                });
+              });
+          });
+   
+};
+
+
+
+
+// document.ontouchmove = function(event){
+//     event.preventDefault();
+// }
+
+$(document).ready(function(){
+
+// breadcrumb 
+
+// $('#linkNavigation a').on('click',function(){
+//   debugger;
+//     var breadId = this.id.split('_')[1],
+//         breadText = $(this).text();
+
+//     renderSubCategories(breadId,breadText);
+
+//     //alert(breadId)
+
+// });
+
+        window.token = localStorage.getItem("TokenID");
+        console.log('home:'+ window.token);
+
+        
+        var getItemsList = function(){
+          $(".loader_sec").show();
+          $.ajax({
+                        type: 'GET',
+                        cache: false,
+                        url: 'http://point-of-sale.gtsinteractive.com/GTSIPOSWS/ProductList',
+                        
+                        headers: {
+                              'DID':localStorage.getItem("uuid"),//'14e5fabb-33a0-4812-a54d-1d0fe672fc41',
+                              'TokenID': token
+                        },                                           
+                        dataType: 'json',                      
+                        success: function(data){
+                         // debugger;
+                         //alert("inside product list");
+                        response = data;
+                        //insert into db
+                        //InsertData(data);
+                        //alert("inside getItemsList"+data.ResultCode);
+
+                         if(data.ResultCode == 0) { 
+                            InsertData(data);
+                            loadDiscountList();
+                            loadImageDataURLS(data);
+                            
+                          } else{
+                            navigator.notification.alert(data.Message);
+                          }
+                          },
+
+                        error: function(data){
+                          navigator.notification.alert( 'Faild to Fetch Prodcuts');
+                        }
+          });
+        }
+
+            //$.when();
+            if(token!=null)
+             { 
+              getItemsList();
+             } else{
+              renderRootCategories();
+              }
+            
+ });
+            
+          var InsertData=function(data){
+             var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+             InsertIntoCategories(db,data.Categories);
+             InsertIntoProducts(db,data.Products);
+
+          }
+          var InsertIntoCategories=function(db,categories){
+            db.transaction(function(tx) {
+            tx.executeSql("DELETE from Categories");
+
+            $.each(categories,function(key,val){
+                //var base64=getBase64(val.ImagePath);
+                //if(base64!=null){
+                  var Base64Img = ""
+                  tx.executeSql("INSERT INTO Categories (CategoryID, CategoryName,CategoryDescription,DisplayOrder,ImagePath,Base64Img,ParentCategoryID,IsActive) VALUES (?,?,?,?,?,?,?,?)",
+                 [val.CategoryID,val.CategoryName,val.CategoryDescription,val.DisplayOrder,val.ImagePath,null,val.ParentCategoryID,val.IsActive],
+                  function(tx, res) {
+
+                }, function(e) {
+                  console.log("ERROR: " + e.message);
+                });
+                //}
+                
+              });
+          });
+          };
+
+          
+       function validateBase64 (imagePath,id){
+          var imageBase64 = '';
+          var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+          var base64table = id.split('_')[0];
+          // alert('SELECT * from '+ base64table + ' Where ImagePath = "'+imagePath+'"');
+          // alert(base64table);
+          db.transaction(function(tx) {
+            tx.executeSql('SELECT * from '+ base64table + ' Where ImagePath = "'+imagePath+'"',[],
+            // tx.executeSql('SELECT * from Categories Where ImagePath = "'+imagePath+'"',[],
+              function(tx,data){
+                 imageBase64 = data.rows.item(0)['Base64Img'];
+        if(imageBase64=='' || imageBase64 == null && localStorage.getItem("isDeviceOnline")=="true") {
+                  var base64String = getBase64(imagePath,id);
+                  return base64String;
+                  } 
+                 else if(imageBase64 != '' || imageBase64 != null)
+                 {
+                      $("#"+id).attr('src',"data:image/jpg;base64,"+imageBase64);
+                      // alert(imageBase64);
+                      if(imageBase64 == '' || imageBase64 == null){
+                        $("#"+id).attr('src',"images/default-image_333.gif");
+                      }
+                  }
+              }, errorCB1);
+          });
+
+
+
+            }
+          
+          function getBase64(imagePath,id){
+             var request={
+               ImageURL:imagePath
+             };
+            var imgSrc;
+           $.ajax({
+            url:'http://point-of-sale.gtsinteractive.com/GTSIPOSWS/getBase64',
+            type:'POST',
+            dataType:'json',
+            // async:false,
+            headers: 
+            {
+              'DID':localStorage.getItem("uuid"),//'14e5fabb-33a0-4812-a54d-1d0fe672fc41',
+               'TokenID': localStorage.getItem("TokenID")
+            },
+            data:request,
+            success:function(data){
+              imgSrc=data.ImageInBase64;
+              var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+              db.transaction(function(tx) {
+              var base64=imgSrc;
+              var base64table = id.split('_')[0];
+                  tx.executeSql("UPDATE "+base64table+" set Base64Img = ? where imagePath = ?",
+                   [base64,imagePath],
+                    function(tx, res) {
+                      $("#"+id).attr('src',"data:image/jpg;base64,"+base64);
+                  }, function(e) {
+
+                    return;
+                    console.log("ERROR: " + e.message);
+                  });
+              });
+            },
+            error:function(data, data1, data2){
+              return;
+            }
+           });
+          }
+
+
+          
+          
+          var InsertIntoProducts=function(db,products){
+           
+                db.transaction(function(tx) {
+            tx.executeSql("DELETE from Products");
+
+            $.each(products,function(key,val){
+              //alert(val.ImagePath);
+            // var base64=getBase64(val.ImagePath);
+            //alert(base64);
+              //if(base64!=null){
+                tx.executeSql("INSERT INTO Products (ProductID,ProductName,CategoryID,DiscountPrice,DisplayOrder,ImagePath,Base64Img,IsActive,Price,ProductDescription) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                 [val.ProductID,val.ProductName,val.CategoryID,val.DiscountPrice,val.DisplayOrder,val.ImagePath,null,val.IsActive,val.Price,val.ProductDescription],
+                  function(tx, res) {
+
+                }, function(e) {
+                  console.log("ERROR: " + e.message);
+                });
+              //}
+              });
+            });
+          };
+
+            // get the fresh list from the server
+
+            $('.refresh_btn').click(function(){       
+            $(".loader_sec").hide();
+              getItemsList();
+            });
+
+
+
+
+
+                   $("#searchTerm").keyup(function(e){
+                    var searchTerm = $(this).val();
+                    var products = [];
+                    if(searchTerm && searchTerm.length >= 3){
+                       $('.home-content').hide();
+                       $('.checkout-wrapper').hide();
+                       getSearchProducts(searchTerm);
+                       // renderProductItems(products, 'SubSlider', 8, 'productHandler', 250, 223);
+                       $('#SubSlider').show();
+                      
+                    }
+                   });
+
+
+                   $('#home').click(function(e){
+                                $('.checkout-wrapper').hide();
+                                $('#SubSlider').html('');
+                                $(".sub-cat-slide").removeClass('height502');
+                                $('#linkNavigation').text('Home');
+                                $('.home-content').show();
+                    });
+
+                   //  $('body').on('click', '.popup-minus-icon', function(e){                   
+                   //  $('.checkout-wrapper').animate({top:'667'}, 300, function(){ 
+                   //  $('.checkout-wrapper').find('#icons').removeClass('popup-minus-icon');
+                   //  $('.checkout-wrapper').find('#icons').addClass('popup-plus-icon')}); 
+                                   
+
+                   // });
+
+
+                   //  $('body').on('click', '.popup-plus-icon', function(e){
+                                    
+                   //  $('.checkout-wrapper').animate({top:'264'}, 300, function(){ 
+                   //  $('.checkout-wrapper').find('#icons').removeClass('popup-plus-icon');
+                   //  $('.checkout-wrapper').find('#icons').addClass('popup-minus-icon')}); 
+                                     
+
+                   // });
+
+                    $('body').on('click', '.place-order-btn', function(e){
+                    $('.place-order-overlay').show();
+                                    
+                 });  
+
+                 $('body').on('click', '.closeOrder', function(e){
+                    $('.place-order-overlay').hide();
+                                    
+                 });  
+
+                 var container = $('.checkout-wrapper');
+
+                 $( ".cartsummary_btn" ).click(                  
+                function( event ){
+                    // Prevent the default event.
+                   // event.preventDefault();
+
+                    // Toggle the slide based on its current
+                    // visibility.
+                    if (container.is( ":visible" )){
+
+                        // Hide - slide up.
+                        container.slideUp( 500 );
+
+                    } else {
+
+                        // Show - slide down.
+                        container.slideDown( 500 );
+
+                    }
+                }
+            );
+                 
+     
+
+
+        $(function(){
+          var hgt = $(window).height();
+          $(".loader_sec").css({'height':hgt});  
+
+
+
+
+
+        });
+
+        // $(document).ajaxStart(function(){         
+        //     $(".loader_sec").show();
+        //     })
+        //   .ajaxStop(function(){
+        //       $(".loader_sec").hide();
+        //   });
+          
+       
+   
+       function print_me(){
+          cordova.plugins.bixolonPrint.addLine(print_itm);
+
+          cordova.plugins.bixolonPrint.printText(null, null);
+           // $('#MyImg').html('');
+       }
+    </script>
+   
+
+ 
+
+         
+    </body>
+    
+</html>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ovidtoday/!svn/ver/57/plugins/org.apache.cordova.network-information/src/ios
+END
+CDVConnection.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/ovidtoday/!svn/ver/57/plugins/org.apache.cordova.network-information/src/ios/CDVConnection.h
+END
+CDVReachability.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/ovidtoday/!svn/ver/57/plugins/org.apache.cordova.network-information/src/ios/CDVReachability.h
+END
+CDVConnection.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/ovidtoday/!svn/ver/57/plugins/org.apache.cordova.network-information/src/ios/CDVConnection.m
+END
+CDVReachability.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/ovidtoday/!svn/ver/57/plugins/org.apache.cordova.network-information/src/ios/CDVReachability.m
+END

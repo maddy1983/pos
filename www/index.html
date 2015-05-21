@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+    <meta charset="utf-8">      
+    <title>POSAPP</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+     <link rel="stylesheet" href="css/ratchet.css">
+     <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/ratchet-theme-ios.css">
+     
+<!--     <link rel="stylesheet" href="dist/css/ratchet-theme-android.min.css"> -->
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/custom.css">
+
+       
+      
+    </head>
+    <body>
+    
+     <div class="content">
+
+     <div class="content-login">
+    
+      <div class="login width92p">
+      <p class="pull-right mar-t10 copyright"><strong>Â© GTS Interactive Pte. Ltd.</strong></p>
+        <div class="login_online">
+          <div class="pull-left width30p">
+            <input type="text" placeholder="Enter Username" id="username">
+          </div>
+          <div  class="pull-left width30p mar-l10">
+            <input type="password" placeholder="Enter Password" id="password">
+          </div>
+        </div>
+        <div class="login_offline" style="display:none">
+          <p class="enter_passcode pull-left"><strong>Enter Passcode</strong></p>
+           <div class="pull-left width19p">
+            <input type="number" class="passcode pull-left numeric"  id="username" >
+            <input type="number" class="passcode pull-left numeric"   id="username" >
+          </div>
+          <div  class="pull-left width19p mar-l3">
+            <input type="number"  class="passcode pull-left numeric"  id="password">
+            <input type="number"  class="passcode pull-left numeric passcodeLog" id="password">
+          </div>
+
+            <!-- <input type="number" class="passcode pull-left numeric" maxlength="1" />
+            <input type="number" class="passcode pull-left numeric mar-l10" maxlength="1" />
+            <input type="number" class="passcode pull-left mar-l10 numeric" maxlength="1" />
+            <input type="number" class="passcode pull-left mar-l10 numeric passcodeLog" maxlength="1" /> -->
+        </div>
+        
+      </div><!-- end of login -->
+
+
+
+
+
+
+      </div>
+</div>
+    <!-- Compose modal -->
+    
+      
+      <!-- <script src="js/ratchet.js"></script>  --> 
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+
+    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+         
+        <script type="text/javascript" src="js/ratchet.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/sliders.js"></script>
+      
+        <script type="text/javascript" src="js/underscore-min.js"></script>       
+        
+        <script type="text/javascript">
+
+     
+
+
+
+var guid = function () {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+};
+
+
+
+       
+
+
+passcodeUpdated = false;
+         var tokenId = null; 
+         localStorage.removeItem('TokenID');
+// alert(localStorage.getItem("uuid"));
+        $(document).ready(function(){
+            if(localStorage.getItem("firstLogin")==undefined){
+              localStorage.setItem("firstLogin","true");
+
+            }
+             
+      
+ if (navigator.onLine) {     
+          $('.login_offline').hide(); 
+          $('.login_online').show();
+        localStorage.setItem("isOffline",false);
+        localStorage.setItem("isDeviceOnline",true);
+        var firstLogin = localStorage.getItem("firstLogin");
+        // window.uuid ="14e5fabb-33a0-4812-a54d-1d0fe672fc41";
+        var uuid=localStorage.getItem("uuid");
+             if(uuid == null){
+              localStorage.setItem("uuid",guid());
+              window.uuid= localStorage.getItem("uuid");
+             }else{
+              window.uuid= localStorage.getItem("uuid");
+             }
+        }  else {
+///  offline mode
+        var firstLogin = localStorage.getItem("firstLogin");
+            $(".loader_sec").hide();
+
+        if(firstLogin == "false"){
+
+            $('.login_online').hide();
+            $('.login_offline').show();
+          } else {
+            
+            $('.login_online').show();
+            $('.login_offline').hide();            
+          }
+          localStorage.setItem("isDeviceOnline",false);
+         
+            $('.passcode:eq(0)').focus();
+            // $('.passcode').on('keyup focus',function(){
+            //       var $prev = $(this).prev();
+            //       var $currVal = $(this).val(),
+            //           $this = $(this);
+            //       if($prev.val() == ""){
+            //         $prev.focus()
+            //       }
+            //       if($currVal !=""){
+            //         $this.next().focus()
+            //       }             
+            //});
+$('.login_offline').find('input').on('keyup',function(e){
+    var boxVal = [];
+    var val1=$(this).val();
+    if(val1.length>1){  
+      
+        boxVal=$(this).val();        
+        var firstvalue = boxVal[0];
+        $(this).val(firstvalue);
+    }
+  });
+            
+        } 
+
+
+
+var passcode = function(){
+  $('.passcode:eq(0)').focus()
+}
+
+
+ 
+
+        passcodeLog = [];   
+    $('.passcodeLog').keyup(function(){
+            var $this = $(this),
+              $curr = $this.closest('.login_offline').find('input');
+                  $curr.each(function(){
+                      passcodeLog.push($(this).val());
+                  });
+              passcodeLog = passcodeLog.join('');
+                var oldPasscode = localStorage.getItem('updatedPasscode');
+                var passcodeUpdated = localStorage.getItem('passcodeUpdated');
+                if(passcodeUpdated == "true"){
+                   if(oldPasscode != passcodeLog){
+                      navigator.notification.alert('Invalid Passcode');
+                    $curr.val('').eq(0).focus();
+                   } else{
+                      window.location.href="home.html";
+                   } 
+              }else {
+                  if(passcodeLog == '0000'){
+                    window.location.href="home.html";
+                  }
+                }
+                passcodeLog = [];
+            });
+
+ $(".numeric_sec input,.numeric").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+          $('#username, #password').keydown(function(event){
+            //alert(window.uuid);
+            if(event.keyCode==13){
+                var username = $('#username').val();
+                var password = $('#password').val();
+ 
+                  $.ajax({
+                      type: 'POST',
+                      cache: false,
+                      url: 'http://point-of-sale.gtsinteractive.com/GTSIPOSWS/AuthenticateUser',
+                      /*beforeSend:function(xhr){
+                            xhr.setRequestHeader('DID', '14e5fabb-33a0-4812-a54d-1d0fe672fc41');
+                      },*/
+                      headers: {
+                            'DID':localStorage.getItem("uuid")//'14e5fabb-33a0-4812-a54d-1d0fe672fc41'
+                      },
+                      contentType: 'application/json',  
+                      /*data: {
+                           'UserName': '1234',
+                           'Password': 'gtsi.1234'
+                      },*/
+                      data: JSON.stringify({
+                        "UserName": username,
+                        "Password": password
+                      }),
+
+                      dataType: 'json',
+                      success: function(msg){
+                        if(msg.ResultCode == 0) {
+
+                          tokenId = msg.TokenID;
+                          localStorage.setItem("TokenID", msg.TokenID);
+                          localStorage.setItem("Company", msg.Company);
+                          
+                var BusinessNumber = ((msg.BusinessNumber == null || msg.BusinessNumber == '') ?  '------------' : msg.BusinessNumber);
+
+                          localStorage.setItem("BusinessNumber", BusinessNumber);
+                          window.location.href="home.html";
+                          localStorage.setItem("firstLogin","false");
+
+                        } else if(msg.ResultCode == 1) {
+                          navigator.notification.alert(
+                              "Contact GTS Interactive",    // message
+                              null,       // callback
+                              "UnAuthorized Device", // title
+                              'OK'        // buttonName
+                          );
+                        } else{
+                          //alert(msg.Message);
+                          navigator.notification.alert(msg.Message);
+
+                        }  
+                      },
+
+                      failure: function(msg){
+                        navigator.notification.alert( 'Failed to Fetch TokenID');
+                      }
+                    });
+  
+            }
+
+
+
+
+          });             
+
+        });
+
+
+
+        </script>
+
+        
+
+        <!-- <div class="app">
+            <h1>PhoneGap</h1>
+            <div id="deviceready" class="blink">
+               
+                
+            </div>
+        </div> -->
+       <!--  // <script type="text/javascript" src="cordova.js"></script>
+        // <script type="text/javascript" src="js/index.js"></script> -->
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>

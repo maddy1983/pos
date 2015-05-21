@@ -1,0 +1,481 @@
+Searching 4 files for "alert"
+
+/Users/kjammalamadaka/Desktop/mac/POSFinal/www/home.html:
+  580            var onDeviceOnline=function(){
+  581              localStorage.setItem("isDeviceOnline",true);
+  582:            // alert(localStorage.getItem('isOffline'));
+  583             if(localStorage.getItem('isOffline')=='false')
+  584             {
+  ...
+  606            };
+  607            function SyncOrders(){
+  608:             //alert('inside SyncOrders');
+  609              var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+  610              db.transaction(function(tx) {
+  ...
+  616            };
+  617            $('.offlineOrders_sec').click(function(){
+  618:             //alert(localStorage.getItem("isDeviceOnline"))
+  619              if(localStorage.getItem("isDeviceOnline")=="true"){
+  620                  SyncOrders();
+  ...
+  624              
+  625              var data=results.rows;
+  626:            // alert('inside OfflineOrdersCallback'+data.length);
+  627             //$(".loader_sec").show();
+  628              for(var i=0;i<data.length;i++){
+  ...
+  657                async:false,
+  658                success:function(data){
+  659:                 //alert('inside sync service success');
+  660                  if(data.ResultCode==0){
+  661                    DeleteOfflineOrder(OfflineOrderId);
+  ...
+  665                },
+  666                error:function(data){
+  667:                 //alert('inside sync service error');
+  668                   $(".loader_sec").hide();
+  669                }
+  ...
+  775                            $('#'+id).html('');
+  776                              for(var i=1; i<=items.length;i++) {
+  777:                                   //alert(items[i-1].ImagePath); 
+  778                                 if((i % sliderItemCount==0) || (items.length < sliderItemCount && i == items.length)){
+  779                                    innerHtml += '<li class="product_itm" id="'+items[i-1].ProductID+'"><span><strong class="product_Name product-names">'+items[i-1].ProductName+'</strong>';                              
+  ...
+  807                          }
+  808                          /*$.each($('.offlineImgs'),function(key,val){
+  809:                           alert($(val).complete);
+  810                          }); */
+  811  
+  ...
+  814  $(document).ready(function() {
+  815      for (var i = 0; i < document.images.length; i++) {
+  816:       //alert("inside images");
+  817          if (!isImageOk(document.images[i])) {
+  818              //document.images[i].style.visibility = "hidden";
+  819:            //alert("not loaded");
+  820          }
+  821      }
+  ...
+  870          });  
+  871       }
+  872:      //alert("root categories count"+_rootCategories.length);
+  873      renderItems(_rootCategories, 'mySliderContent', 7, 'renderSubCategories', 81, 81 );
+  874:     //alert("render complete");
+  875      if(_rootCategories && _rootCategories.length > 0){      
+  876        renderSubCategories(_rootCategories[0].CategoryID, _rootCategories[0].CategoryName);
+  ...
+  881  function errorCB1()
+  882  {
+  883:     //alert("Query failed");
+  884  }
+  885  function renderSubCategories(categoryId,categoryName){
+  ...
+  905  function getSubCategories(categoryId){
+  906  
+  907:   //alert("inside getSubcategories");
+  908  var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+  909   db.transaction(function(tx) {
+  ...
+  915  };
+  916  function subCategoriesCallBack(tx,results){
+  917:   //alert("inside Subcategories call back");
+  918  var _subCategories=[];
+  919        var data=results.rows;
+  ...
+  947  };
+  948  function getProducts(categoryId){
+  949:     //alert("inside render product "+categoryId);
+  950  var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+  951   db.transaction(function(tx) {
+  ...
+  976  }
+  977  function productHandler(categoryId){
+  978:   //navigator.notification.alert(categoryId);
+  979  };
+  980  function loadImageDataURLS(response){
+  ...
+  995        img.onload = function () {
+  996         //console.log('local image for '+type+index);
+  997:        //alert(imgSrc);        
+  998          items[index].ImagePath = 'images' + imgSrc.substring(imgSrc.lastIndexOf('/'));        
+  999          getImageDataURL(items, index+1, type, deferType);
+ ....
+ 1009        } else {
+ 1010          //console.log('default image for '+type+index);
+ 1011:         //alert('inside image error');
+ 1012          items[index].ImagePath = 'images/default-image_333.gif';
+ 1013        }
+ ....
+ 1063        if(ResultCode == 0){        
+ 1064          discounts = data.Discounts;
+ 1065:         //alert("inside parent discount");
+ 1066          SaveDiscountsForOfflineUse(discounts);
+ 1067          localStorage.setItem('discounts',JSON.stringify(discounts));
+ 1068        } else{
+ 1069:           navigator.notification.alert(data.Message);
+ 1070        }      
+ 1071      },
+ 1072      error : function(data){
+ 1073:       alert(data.status);
+ 1074:       navigator.notification.alert('Failed to fetch discount list')
+ 1075      }
+ 1076    })
+ 1077  }
+ 1078  var SaveDiscountsForOfflineUse=function(discounts){
+ 1079:   //alert("inside sve discounts");
+ 1080    var db = window.sqlitePlugin.openDatabase("PosApp", "1.0", "Demo", -1);
+ 1081     db.transaction(function(tx) {
+ ....
+ 1113  //     renderSubCategories(breadId,breadText);
+ 1114  
+ 1115: //     //alert(breadId)
+ 1116  
+ 1117  // });
+ ....
+ 1136                          success: function(data){
+ 1137                           // debugger;
+ 1138:                          //alert("inside product list");
+ 1139                          response = data;
+ 1140                          //insert into db
+ ....
+ 1147                              
+ 1148                            } else{
+ 1149:                             navigator.notification.alert(data.Message);
+ 1150                            }
+ 1151                            },
+ 1152  
+ 1153                          error: function(data){
+ 1154:                           navigator.notification.alert( 'Faild to Fetch Prodcuts');
+ 1155                          }
+ 1156            });
+ ....
+ 1210              success:function(data){
+ 1211                imgSrc=data.ImageInBase64;
+ 1212:               //alert(imgSrc);
+ 1213  
+ 1214              },
+ 1215              error:function(data){
+ 1216:               //alert("inside base64 error");
+ 1217              }
+ 1218  
+ ....
+ 1226  
+ 1227              $.each(products,function(key,val){
+ 1228:               //alert(val.ImagePath);
+ 1229              //var base64=getBase64(val.ImagePath);
+ 1230:             //alert(base64);
+ 1231                //if(base64!=null){
+ 1232                  tx.executeSql("INSERT INTO Products (ProductID,ProductName,CategoryID,DiscountPrice,DisplayOrder,ImagePath,Base64Img,IsActive,Price,ProductDescription) VALUES (?,?,?,?,?,?,?,?,?,?)",
+ ....
+ 1344     
+ 1345         function print_me(){
+ 1346:        // alert('inside print me');
+ 1347:       // alert("asdfasdfasd");
+ 1348         		cordova.plugins.bixolonPrint.addLine(print_itm);
+ 1349            cordova.plugins.bixolonPrint.printText(null, null);
+
+/Users/kjammalamadaka/Desktop/mac/POSFinal/www/index.html:
+  133                  if(passcodeUpdated == true){
+  134                     if(oldPasscode != passcodeLog){
+  135:                     navigator.notification.alert('Enter New Passcode');
+  136                      $curr.val('').focus();
+  137                     } else {
+  ...
+  200                          }
+  201                          // else if (msg.ResultCode == 1) {
+  202:                         //   navigator.notification.alert('DID not allowed');
+  203  
+  204  
+  205                          // }else if (msg.ResultCode == 2) {
+  206:                         //   navigator.notification.alert('Invalid login credentials');
+  207  
+  208                          // }
+  209:                         else{navigator.notification.alert(msg.Message)}  
+  210                        },
+  211  
+  212                        failure: function(msg){
+  213:                         navigator.notification.alert( 'Faild to Fetch TokenID');
+  214                        }
+  215                      });
+
+/Users/kjammalamadaka/Desktop/mac/POSFinal/www/js/cart.js:
+    9  
+   10  /*if (navigator.onLine) {  
+   11: alert("online");   
+   12  } else{
+   13: alert("offline");
+   14  }*/
+   15  
+   ..
+   77      //     var elem = $(this);
+   78      //     if(elem.val() == ''){
+   79:     //        // alert(typeof($(this).val()));
+   80      //         elem.val('0');
+   81      //     }
+   ..
+  235                  var Cash = parseFloat(cashIn).toFixed(2);
+  236                  if(Cash < grandTotal){
+  237:                     // alert('Amount Mismatched');
+  238:                     navigator.notification.alert('Amount Mismatched');
+  239                      // e.stopPropagation();
+  240                       e.stop();
+  ...
+  271              $('#cash_checkout').removeAttr('disabled');
+  272          }
+  273:         //alert(cashOut)
+  274          //localStorage.setItem('cashOut',cashOut)
+  275  
+  ...
+  387                      $('.checkout_btn').attr('id','checkout_Cart')
+  388                  } else {
+  389:                     navigator.notification.alert(data.Message)
+  390                  }
+  391              },
+  392              error : function(error){
+  393:                 navigator.notification.alert('some problem occured');
+  394              }
+  395  
+  ...
+  453      // }
+  454       //
+  455:      //alert(discountAmount);
+  456      };
+  457      var getDiscount = function(){
+  ...
+  490                          placeOrder();
+  491                      }                    
+  492:                     navigator.notification.alert(data.Message);
+  493                  } 
+  494                  else {
+  495:                     navigator.notification.alert(data.Message);
+  496                  }
+  497              },
+  498              error : function(data){
+  499:                navigator.notification.alert('Some thing got wrong with discount')
+  500              }
+  501  
+  ...
+  523          // post parameters
+  524          //
+  525:         //alert('gift')
+  526          var giftcardCode = $('.coupon_code').val();
+  527          discount = {
+  ...
+  557                          localStorage.setItem('cashOut','0');
+  558                          $('#cashValue').val('3');
+  559:                         navigator.notification.alert(data.Message);
+  560:                         //alert(data.Message);
+  561                          placeOrder();
+  562                      }
+  563                  } else {
+  564:                     navigator.notification.alert(data.Message);
+  565                  }
+  566              },
+  567              error : function(error){
+  568:                 navigator.notification.alert('some problem occured on getting discount');
+  569              }
+  570          })
+  ...
+  628          
+  629           //SaveOfflineOrders();
+  630:          //alert(localStorage.getItem('isDeviceOnline'));
+  631           //SaveOfflineOrders();
+  632           if(localStorage.getItem('isDeviceOnline')=='false'){
+  ...
+  637          } else {
+  638               //$('#cashValue').val('3');
+  639:             //alert("cart id="+cartId);
+  640              if(cartId == '' || cartId == undefined){
+  641                  $.when(addtocart(cartDetails)).done(function(){
+  ...
+  718  }
+  719  function SaveIntoOfflineOrderProduct(db,offlineOrderObj){
+  720:    // alert("inside SaveIntoOfflineOrderProduct");
+  721  db.transaction(function(tx) {
+  722      $.each(offlineOrderObj.Products,function(key,val){
+  ...
+  765              //    case 3:
+  766                      if(CardNo <= 15 || CardNo >= 17){
+  767:                         navigator.notification.alert('Enter Correct Card No');
+  768                          return false;
+  769                      }
+  770                      if(month > 12 || month < 1){
+  771:                         navigator.notification.alert('Month should be in between 1 and 12');
+  772                          return false;
+  773                      }
+  774                      if(year < currentYear){
+  775:                         navigator.notification.alert('Enter correct expiry year');
+  776                          return false;
+  777                      }
+  778                      if(cvv < 3){
+  779:                         navigator.notification.alert('CVV should be either 3 or 4');
+  780                          return false;
+  781                      }
+  ...
+  786                  //case 1:
+  787                      if(cashOut==''){
+  788:                         navigator.notification.alert('Enter Cash');
+  789                          return false
+  790                      } 
+  ...
+  850              };
+  851          }
+  852:        // alert("CartID="+data.CartID+" "+"Amount="+data.Amount);
+  853         // console.log('close order data'+data);
+  854  
+  ...
+  868                      data        : data,
+  869                      success     : function(data){
+  870:                     //alert('success order');
+  871                        // console.log('comleteOrder: '+data.Message);
+  872:                        // alert('comleteOrder: '+data.Message);
+  873                          //console.log(data);
+  874                          //debugger;
+  ...
+  894                              //$('#home').click();    
+  895                              localStorage.removeItem("removeOrderId");  
+  896:                             // alert('hi print');
+  897                                print_me();   
+  898                                if(PaymentMethod == '1'){
+  899:                                 //alert(data.Message+" Cash Out: $"+cashOut);    
+  900:                                 navigator.notification.alert(data.Message+" Cash Out: $"+cashOut);          
+  901                                }
+  902                             $('.home-icon-top').click();
+  903                             
+  904: // 							alert('outside');
+  905  
+  906                               
+  ...
+  911                             // $('#cash_checkout,#credit_checkout,#eftpos_checkout').attr('disabled','true');
+  912                          } else {
+  913:                            navigator.notification.alert(data.Message);
+  914                          }
+  915                      },
+  916                      error : function(data){
+  917:                         navigator.notification.alert(error);
+  918                          //console.log('closeOrder: '+error);
+  919                      }
+  ...
+  922        // } // end of validate funciton
+  923          // else {
+  924:         //     alert('some error occured');
+  925          // }
+  926  
+  ...
+  985          var deleteId =  $(this).closest('.product_itm').attr('id');
+  986          if($(this).is(":checked")){
+  987:             //alert(deleteId);
+  988              deleteproducts.push(deleteId);
+  989          } else {
+  990:             //alert('not checked');
+  991              //var removeItem = deleteId;
+  992              deleteproducts = jQuery.grep(deleteproducts, function(value) {
+  ...
+ 1122               }
+ 1123          } else {
+ 1124:             navigator.notification.alert('Please Specify an Id');
+ 1125          }
+ 1126      //}
+ ....
+ 1151           });
+ 1152           if(obj.length>0){
+ 1153:             navigator.notification.alert("Table Id already Exists");
+ 1154              $('#tableName').val('');
+ 1155            return false;
+ ....
+ 1318              success : function(data){               
+ 1319                 if(data.ResultCode == 0){
+ 1320:                         navigator.notification.alert('Refunded Amount: $'+data.RefundAmount.toFixed(2));
+ 1321                          $('.refund_sec input').val('');
+ 1322  
+ 1323                  } else {
+ 1324:                     navigator.notification.alert(data.Message);
+ 1325                      //$('.refund_sec input').val('');
+ 1326                  }
+ ....
+ 1328              },
+ 1329              error : function(error){
+ 1330:                 navigator.notification.alert('Some error occured on refunding')
+ 1331              }
+ 1332          });
+ 1333      } else {
+ 1334:         navigator.notification.alert('Please fill the details');
+ 1335      }
+ 1336  
+ ....
+ 1410  
+ 1411  var getOrdersCount = function(){
+ 1412:     //alert("inside orders count");
+ 1413      $('.loader_sec').hide();
+ 1414      var data = {
+ ....
+ 1430                  }
+ 1431              } else {
+ 1432:                 navigator.notification.alert(data.Message)
+ 1433              }
+ 1434          },
+ 1435          error : function(data){
+ 1436:             navigator.notification.alert(data.Message);
+ 1437          }
+ 1438      });
+ ....
+ 1467                  } else {
+ 1468                      // $('.order_details_sec tbody').html('There are no Web Orders') 
+ 1469:                     // navigator.notification.alert('There are no Web Orders')
+ 1470                  }
+ 1471              } else {
+ 1472:                 navigator.notification.alert(data.Message)
+ 1473              }
+ 1474          },
+ 1475          error : function(data){
+ 1476:             navigator.notification.alert(data.Message);
+ 1477          }
+ 1478      });
+ ....
+ 1510                  $('#webOrder_number').val('').blur();
+ 1511              } else {
+ 1512:                 navigator.notification.alert(data.Message)
+ 1513              }
+ 1514          },
+ 1515          error : function(data){
+ 1516:             navigator.notification.alert(data.Message);
+ 1517          }
+ 1518      });  
+ ....
+ 1609                  $('.orders-list li#'+OrderId).remove();
+ 1610              } else {
+ 1611:                 navigator.notification.alert(data.Message)
+ 1612              }
+ 1613          },
+ 1614          error : function(data){
+ 1615:             navigator.notification.alert(data.Message);
+ 1616          }
+ 1617      });    
+ ....
+ 1635      if(passcodeUpdated == true){
+ 1636         if(oldPasscode != currPassCode){
+ 1637:         navigator.notification.alert('Enter New Passcode');
+ 1638          $curr.val('');
+ 1639         }
+ ....
+ 1675         var oldPasscode = localStorage.getItem('updatedPasscode');
+ 1676         if(oldPasscode == NPassCode){
+ 1677:         navigator.notification.alert('Enter New Passcode');
+ 1678          $curr.val('').focus();
+ 1679         }
+ ....
+ 1688          CPassCode = confirmPassCode.join('');
+ 1689           if(CPassCode != NPassCode){
+ 1690:             navigator.notification.alert('Passcode does not match');
+ 1691              $curr.val('').focus();
+ 1692          }   
+ ....
+ 1695      $('.updatePasscode').click(function(){
+ 1696          localStorage.setItem('updatedPasscode',CPassCode);
+ 1697:         navigator.notification.alert('Passcode Updated Successfully');
+ 1698          passcodeUpdated = true;
+ 1699          $("get-passcode input").val("");
+
+96 matches across 3 files
